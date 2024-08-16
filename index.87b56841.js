@@ -33236,10 +33236,7 @@ var $e2cca8490259b943$export$2e2bcd8739ae039 = {
             if (timeout > 0) clearTimeout(t);
             this.reader.releaseLock();
         }
-        if (this.tracing) {
-            console.log("Read bytes");
-            this.trace(`Read ${packet.length} bytes: ${this.hexConvert(packet)}`);
-        }
+        
         if (this.slipReaderEnabled) {
             const slipReaderResult = this.slipReader(packet);
             if (this.tracing) {
