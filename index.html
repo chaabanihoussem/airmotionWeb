@@ -1,6 +1,4 @@
-<!DOCTYPE html>
-<html>
-    <style>#myProgress {
+<!DOCTYPE html><html><head><script type="importmap">{"imports":{"27EgF":"./esp32c3.4a84af2e.js","5hdDx":"./esp32h2.c31a4b24.js","6l2G9":"./esp32.9f397339.js","7bEn3":"./esp8266.881b3b4d.js","94GVy":"./esp32p4.55739365.js","aQnhq":"./esp32c2.f150032e.js","c1Yyw":"./esp32s3.16f1bd4a.js","gHNxJ":"./esp32c6.e87e0359.js","jX8zv":"./esp32s2.3530013c.js"}}</script><style>#myProgress {
   background-color: #ddd;
   width: 100%;
 }
@@ -23,14 +21,14 @@
 }
 </style>
         
-    <head>
+    
         <meta charset="utf-8">
         <title>AirMotion Update Tool</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/xterm@4.19.0/css/xterm.css">
         <link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet">
         <link rel="icon" href="LogoAirmotion.c06f1226.png">
-         <script type="module" src="index.runtime.c90d7447.js"></script><script src="https://cdn.jsdelivr.net/npm/xterm@4.19.0/lib/xterm.min.js"></script>
+         <script src="https://cdn.jsdelivr.net/npm/xterm@4.19.0/lib/xterm.min.js"></script>
          <script src="https://cdn.jsdelivr.net/npm/crypto-js@4.1.1/crypto-js.js"></script>
          <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
          <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -65,20 +63,26 @@
                 <hr>
             </div>
             <h3> How to connect in update mode ? </h3>
-                  <div class="row" align="center"></div>
-                    <div class="column" align="center">
-                        <h4> Connect the Dongle in update mode </h4>
-                        <video width="320" height="240" controls="">
-                            <source src="dongleDebug.cd2bc101.mp4" type="video/mp4">
+                  <div class="row" style="text-align: center; justify-content: center; gap: 20px; display: flex">
+                      <div class="column">
+                          <h4>Connect the Dongle</h4>
+                          <video width="220" height="240" controls="">
+                              <source src="dongleDebug.cd2bc101.mp4" type="video/mp4">
                           </video>
-                    </div>
-                    <div class="column" align="center"></div>
-                        <h4> Connect the Device in update mode </h4>
-                        <video width="320" height="240" controls="">
-                            <source src="deviceDebug.80963a45.mp4" type="video/mp4">
+                      </div>
+                      <div class="column">
+                          <h4>Connect the new model Device</h4>
+                          <video width="220" height="220" controls="">
+                              <source src="device_S3_debug.4a2f2252.mp4" type="video/mp4">
                           </video>
-                    </div>
-                  
+                      </div>
+                      <div class="column">
+                          <h4>Connect the Device</h4>
+                          <video width="220" height="240" controls="">
+                              <source src="deviceDebug.80963a45.mp4" type="video/mp4">
+                          </video>
+                      </div>
+                  </div>
 
             <div id="console">
                 <h3>Console </h3>
@@ -97,17 +101,18 @@
                 <hr>
             </div>
             <div id="terminal"></div>
-        
-        <script src="index.3a810730.js" type="module"></script>
+        </div>
+        <script src="typescript.fb6f429b.js" type="module"></script>
         <script>// Safari 3.0+ "[object HTMLElementConstructor]"
 var isSafari = /constructor/i.test(window.HTMLElement) || function(p) {
     return p.toString() === "[object SafariRemoteNotification]";
-}(!window["safari"] || typeof safari !== "undefined" && window["safari"].pushNotification);
+}(!window['safari'] || typeof safari !== 'undefined' && window['safari'].pushNotification);
 if (isSafari) {
     document.getElementById("safariErr").style.display = "inline";
     document.getElementById("main").style.display = "none";
 }
 
 </script>
-    </body>
-</html>
+    
+
+</body></html>
