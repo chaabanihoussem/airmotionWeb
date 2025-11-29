@@ -1,113 +1,165 @@
-<!DOCTYPE html>
-<html>
-    <style>#myProgress {
-  background-color: #ddd;
-  width: 100%;
-}
-
-#myBarAirmotion, #myBarDevice {
-  background-color: #04aa6d;
-  width: 0%;
-  height: 30px;
-}
-
-.column {
-  float: left;
-  width: 50%;
-}
-
-.row:after {
-  content: "";
-  clear: both;
-  display: table;
-}
-</style>
-        
-    <head>
+<!DOCTYPE html><html lang="en"><head><script type="importmap">{"imports":{"27EgF":"./esp32c3.4a84af2e.js","5hdDx":"./esp32h2.c31a4b24.js","6l2G9":"./esp32.9f397339.js","7bEn3":"./esp8266.881b3b4d.js","94GVy":"./esp32p4.55739365.js","aQnhq":"./esp32c2.f150032e.js","c1Yyw":"./esp32s3.16f1bd4a.js","gHNxJ":"./esp32c6.e87e0359.js","jX8zv":"./esp32s2.3530013c.js"}}</script>
         <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>AirMotion Update Tool</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/xterm@4.19.0/css/xterm.css">
-        <link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet">
         <link rel="icon" href="LogoAirmotion.c06f1226.png">
-         <script type="module" src="index.runtime.c90d7447.js"></script><script src="https://cdn.jsdelivr.net/npm/xterm@4.19.0/lib/xterm.min.js"></script>
-         <script src="https://cdn.jsdelivr.net/npm/crypto-js@4.1.1/crypto-js.js"></script>
-         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/xterm@4.19.0/css/xterm.css">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&amp;display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="typescript.b2d495f9.css">
+        <script src="https://cdn.jsdelivr.net/npm/xterm@4.19.0/lib/xterm.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/crypto-js@4.1.1/crypto-js.js"></script>
     </head>
     <body>
-        <h1 align="center"><p><img src="LogoAirmotion.c06f1226.png" width="100" height="100" style="vertical-align: middle" crossorigin=""> AirMotion Update Tool</p></h1>
-        <h4 align="center"><p> POWERED BY PAPRITECH</p></h4>
-        <div id="safariErr" style="display: none"><p align="center" style="color: red">This tool is not supported on Safari browser!</p>
-        </div>
-        
-        
-        <div class="container" id="main">
-            <hr>
-            <div id="Update">
-                <h3> Update AirMotion Device  </h3>
-                
-                <input class="btn btn-info btn-sm" type="button" id="deviceUpdate" value="Update AirMotion Device">
-                <br><br>
-                <div id="myProgress">
-                    <div id="myBarAirmotion"></div>
-                  </div>
-
-                  <h3> Update AirMotion Dongle  </h3>
-                <input class="btn btn-info btn-sm" type="button" id="dongleUpdate" value="Update AirMotion Dongle">
-                <br><br>
-                <div id="myProgress">
-                    <div id="myBarDevice"></div>
-                  </div>
-                  
-                  
-                <output id="list"></output>
-                <hr>
+        <header class="site-header py-4 bg-light border-bottom">
+            <div class="container d-flex align-items-center gap-3">
+                <img src="LogoAirmotion.c06f1226.png" alt="AirMotion" width="64" height="64" crossorigin="">
+                <div>
+                    <h1 class="h4 mb-0">AirMotion Update Tool</h1>
+                    <div class="text-muted small">Powered by Papritech</div>
+                </div>
             </div>
-            <h3> How to connect in update mode ? </h3>
-                  <div class="row" align="center"></div>
-                    <div class="column" align="center">
-                        <h4> Connect the Dongle in update mode </h4>
-                        <video width="320" height="240" controls="">
-                            <source src="dongleDebug.cd2bc101.mp4" type="video/mp4">
-                          </video>
-                    </div>
-                    <div class="column" align="center"></div>
-                        <h4> Connect the Device in update mode </h4>
-                        <video width="320" height="240" controls="">
-                            <source src="deviceDebug.80963a45.mp4" type="video/mp4">
-                          </video>
-                    </div>
-                  
+        </header>
 
-            <div id="console">
-                <h3>Console </h3>
-                <label style="display: none" id="lblConsoleFor">Connected to device: </label>
-                <label for="consoleBaudrates" id="lblConsoleBaudrate">Baudrate:</label>
-                <select name="consoleBaudrates" id="consoleBaudrates">
-                    <option value="115200">115200</option>
-                    <option value="74880">74880</option>
-                </select>
+        <main class="container my-4" id="main">
+            <div id="safariErr" class="alert alert-danger text-center d-none">This tool is not supported on Safari browser!</div>
 
-                <br><br>
-
-                <input class="btn btn-info" type="button" id="consoleStartButton" value="Start">
-                <input class="btn btn-info" type="button" id="consoleStopButton" value="Stop">
-                <input class="btn btn-info" type="button" id="resetButton" value="Reset">
-                <hr>
+            <!-- Spinner overlay shown after user selects COM port and while connecting -->
+            <div id="spinnerOverlay" class="spinner-overlay d-none">
+                <div class="spinner-inner text-center">
+                    <div class="spinner-border text-primary" role="status" aria-hidden="true"></div>
+                    <div class="spinner-text mt-2">Connecting…</div>
+                </div>
             </div>
-            <div id="terminal"></div>
-        
-        <script src="index.3a810730.js" type="module"></script>
-        <script>// Safari 3.0+ "[object HTMLElementConstructor]"
-var isSafari = /constructor/i.test(window.HTMLElement) || function(p) {
+            <!-- Status alerts (toasts) container -->
+            <div id="statusAlert" class="position-fixed top-0 end-0 p-3" style="z-index: 1060"></div>
+
+            <div id="program">
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <h3 class="card-title">Update AirMotion Device</h3>
+                                <p class="text-muted small">Use this to update latest firmware to the AirMotion device.</p>
+                                <div class="d-flex gap-2 mb-3">
+                                    <button id="deviceUpdate" class="btn btn-primary btn-sm">Update Device</button>
+                                </div>
+                                <div class="progress" style="height: 12px">
+                                    <div id="myBarAirmotion" class="progress-bar" role="progressbar" style="width: 0%"></div>
+                                </div>
+                                <div class="mt-2 small text-muted">Total progress</div>
+                                <div class="progress" style="height: 8px">
+                                    <div id="myBarAirmotionTotal" class="progress-bar bg-info" role="progressbar" style="width: 0%"></div>
+                                </div>
+                                <ol class="small mt-3 text-muted" start="1">
+                                    <li>Hold the small button near the airflow adjuster while powering on to enter update mode (green LED off).</li>
+                                    <li>Select “Update Device” and wait until the update completes.</li>
+                                    <li>Restart the device after updating.</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <h3 class="card-title">Update AirMotion Dongle</h3>
+                                <p class="text-muted small">Use this to update latest firmware to the AirMotion dongle.</p>
+                                <div class="d-flex gap-2 mb-3">
+                                    <button id="dongleUpdate" class="btn btn-primary btn-sm">Update Dongle</button>
+                                </div>
+                                <div class="progress" style="height: 12px">
+                                    <div id="myBarDevice" class="progress-bar" role="progressbar" style="width: 0%"></div>
+                                </div>
+                                <div class="mt-2 small text-muted">Total progress</div>
+                                <div class="progress" style="height: 8px">
+                                    <div id="myBarDeviceTotal" class="progress-bar bg-info" role="progressbar" style="width: 0%"></div>
+                                </div>
+                                <ol class="small mt-3 text-muted" start="1">
+                                    <li>Hold the small button at the back while powering on to enter update mode (screen off).</li>
+                                    <li>Select “Update Dongle and wait until the update completes.</li>
+                                    <li>Restart the device after updating.</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="my-4">
+
+                <h4>How to connect in update mode</h4>
+                <div class="row gy-3">
+                    <div class="col-sm-4">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">Connect the Dongle</h5>
+                                <video class="w-100 rounded" controls="">
+                                    <source src="dongleDebug.cd2bc101.mp4" type="video/mp4">
+                                </video>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">Connect the Device</h5>
+                                <video class="w-100 rounded" controls="" style="object-fit: contain; width: 100%; height: auto; max-height: 360px">
+                                    <source src="device_S3_debug.5d92829a.mp4" type="video/mp4">
+                                </video>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">Connect the old Device</h5>
+                                <video class="w-100 rounded" controls="">
+                                    <source src="deviceDebug.80963a45.mp4" type="video/mp4">
+                                </video>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="my-4">
+
+                <div id="console" class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Console</h4>
+                        <div class="mb-2">
+                            <label id="lblConsoleFor" class="me-2 d-none">Connected to device:</label>
+                            <label for="consoleBaudrates" id="lblConsoleBaudrate" class="me-2">Baudrate:</label>
+                            <select name="consoleBaudrates" id="consoleBaudrates" class="form-select d-inline-block w-auto">
+                                <option value="115200">115200</option>
+                                <option value="74880">74880</option>
+                            </select>
+                        </div>
+
+                        <div class="d-flex gap-2 mb-3">
+                            <button id="consoleStartButton" class="btn btn-outline-primary">Start</button>
+                            <button id="consoleStopButton" class="btn btn-outline-secondary">Stop</button>
+                            <button id="resetButton" class="btn btn-outline-danger">Reset</button>
+                        </div>
+
+                        <div id="terminal" class="terminal rounded border"></div>
+                    </div>
+                </div>
+            </div>
+
+            <footer class="text-center text-muted small mt-4 d-none">Built for demos — keep the browser tab open during flashing.</footer>
+        </main>
+
+        <script src="typescript.fc498d45.js" type="module"></script>
+        <script>var isSafari = /constructor/i.test(window.HTMLElement) || function(p) {
     return p.toString() === "[object SafariRemoteNotification]";
-}(!window["safari"] || typeof safari !== "undefined" && window["safari"].pushNotification);
+}(!window['safari'] || typeof safari !== 'undefined' && window['safari'].pushNotification);
 if (isSafari) {
-    document.getElementById("safariErr").style.display = "inline";
+    document.getElementById("safariErr").classList.remove('d-none');
     document.getElementById("main").style.display = "none";
 }
 
 </script>
-    </body>
-</html>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+
+</body></html>

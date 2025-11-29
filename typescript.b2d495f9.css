@@ -1,0 +1,100 @@
+:root {
+  --bg: #f6f8fb;
+  --card: #fff;
+  --muted: #6c757d;
+  --accent: #0d6efd;
+  --success: #198754;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: #0b1220;
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica Neue, Arial;
+}
+
+.site-header {
+  background: linear-gradient(90deg, #fff 0%, #fbfdff 100%);
+}
+
+.card {
+  background: var(--card);
+}
+
+.card-title {
+  font-weight: 600;
+}
+
+.btn-primary {
+  background: var(--accent);
+  border-color: #0000;
+}
+
+.progress {
+  background: #0d6efd14;
+}
+
+.progress-bar {
+  background: linear-gradient(90deg, var(--accent), #4da3ff);
+}
+
+#myBarAirmotion.progress-bar {
+  background: linear-gradient(90deg, var(--success), #4ddc7a);
+}
+
+.terminal {
+  background: #000;
+  height: 320px;
+  overflow: hidden;
+}
+
+.terminal .xterm {
+  height: 100%;
+}
+
+video {
+  object-fit: cover;
+  max-height: 220px;
+}
+
+@media (width <= 575px) {
+  .terminal {
+    height: 220px;
+  }
+}
+
+.alert-danger {
+  background: #fff0f0;
+  border-color: #ffd6d6;
+}
+
+.small {
+  font-size: .9rem;
+}
+
+.spinner-overlay {
+  z-index: 1050;
+  background: #0a0c1059;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  position: fixed;
+  inset: 0;
+}
+
+.spinner-inner {
+  background: var(--card);
+  border-radius: 10px;
+  padding: 18px 22px;
+  box-shadow: 0 6px 20px #0b12201f;
+}
+
+.spinner-text {
+  color: var(--muted);
+  font-weight: 600;
+}
+/*# sourceMappingURL=typescript.b2d495f9.css.map */
